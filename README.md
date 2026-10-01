@@ -46,6 +46,14 @@ and run either a standard network diagnostic or a traceroute analysis.
 
 The dashboard displays current measurements alongside historical performance data, charts, route information, and stored diagnostics.
 
+### Dashboard Overview
+
+![NetScope dashboard overview](screenshots/dashboard-overview.png)
+
+### Traceroute Analysis
+
+![NetScope traceroute analysis](screenshots/traceroute-analysis.png)
+
 ## Technology Stack
 
 ### Backend
