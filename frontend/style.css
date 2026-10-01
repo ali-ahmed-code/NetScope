@@ -1,0 +1,986 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background: #f4f7fb;
+    color: #172033;
+}
+
+
+/* --------------------------------------------------
+   HEADER
+-------------------------------------------------- */
+
+.topbar {
+    background: #ffffff;
+
+    border-bottom: 1px solid #e3e8ef;
+
+    padding: 24px 7%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.topbar h1 {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+
+.topbar p {
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+
+/* --------------------------------------------------
+   API STATUS
+-------------------------------------------------- */
+
+.api-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 13px;
+
+    border-radius: 20px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+}
+
+
+.api-status.checking {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+
+.api-status.checking .status-dot {
+    background: #9ca3af;
+}
+
+
+.api-status.online {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+
+.api-status.online .status-dot {
+    background: #10b981;
+}
+
+
+.api-status.offline {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+
+.api-status.offline .status-dot {
+    background: #ef4444;
+}
+
+
+/* --------------------------------------------------
+   MAIN DASHBOARD
+-------------------------------------------------- */
+
+.dashboard {
+    width: 86%;
+    max-width: 1300px;
+
+    margin: 40px auto;
+}
+
+
+/* --------------------------------------------------
+   DIAGNOSTIC PANEL
+-------------------------------------------------- */
+
+.diagnostic-panel {
+    background: white;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 14px;
+
+    padding: 28px;
+
+    margin-bottom: 25px;
+}
+
+
+.diagnostic-panel h2 {
+    font-size: 22px;
+}
+
+
+.section-description {
+    color: #6b7280;
+
+    margin-top: 8px;
+    margin-bottom: 22px;
+}
+
+
+.search-area {
+    display: flex;
+    gap: 12px;
+}
+
+
+.search-area input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 14px 16px;
+
+    border: 1px solid #cfd7e3;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+.search-area input:focus {
+    border-color: #356ae6;
+}
+
+
+.search-area button {
+    padding: 14px 22px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #356ae6;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.search-area button:hover {
+    background: #2855bd;
+}
+
+
+.search-area button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+.search-area .secondary-button {
+    background: #172033;
+}
+
+
+.search-area .secondary-button:hover {
+    background: #2f3b52;
+}
+
+
+/* --------------------------------------------------
+   CURRENT METRIC CARDS
+-------------------------------------------------- */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+
+.metric-card {
+    background: white;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 14px;
+
+    padding: 24px;
+}
+
+
+.metric-label {
+    color: #6b7280;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+
+.metric-card h3 {
+    margin-top: 12px;
+    margin-bottom: 8px;
+
+    font-size: 25px;
+}
+
+
+.metric-card p:last-child {
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* --------------------------------------------------
+   OVERALL STATUS
+-------------------------------------------------- */
+
+.status-panel {
+    background: white;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 14px;
+
+    padding: 24px;
+
+    margin-bottom: 25px;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.status-panel h2 {
+    margin-top: 7px;
+}
+
+
+.status-panel.status-neutral {
+    background: white;
+    border-color: #e3e8ef;
+}
+
+
+.status-panel.status-running {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+
+.status-panel.status-running h2 {
+    color: #1d4ed8;
+}
+
+
+.status-panel.status-healthy {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+}
+
+
+.status-panel.status-healthy h2 {
+    color: #047857;
+}
+
+
+.status-panel.status-degraded {
+    background: #fffbeb;
+    border-color: #fde68a;
+}
+
+
+.status-panel.status-degraded h2 {
+    color: #b45309;
+}
+
+
+.status-panel.status-failed {
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+
+
+.status-panel.status-failed h2 {
+    color: #b91c1c;
+}
+
+
+/* --------------------------------------------------
+   TRACEROUTE
+-------------------------------------------------- */
+
+.traceroute-panel {
+    background: white;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 14px;
+
+    padding: 28px;
+
+    margin-bottom: 25px;
+}
+
+
+.traceroute-heading {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+}
+
+
+.traceroute-panel .section-heading h2 {
+    font-size: 21px;
+}
+
+
+.traceroute-panel .section-heading p {
+    color: #6b7280;
+
+    margin-top: 5px;
+
+    margin-bottom: 22px;
+}
+
+
+.traceroute-summary {
+    background: #f3f4f6;
+
+    color: #6b7280;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.traceroute-table th,
+.traceroute-table td {
+    white-space: nowrap;
+}
+
+
+.traceroute-address {
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+}
+
+
+.hop-status {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.hop-status.responded {
+    background: #ecfdf5;
+
+    color: #047857;
+}
+
+
+.hop-status.timeout {
+    background: #f3f4f6;
+
+    color: #6b7280;
+}
+
+
+/* --------------------------------------------------
+   ROUTE ANALYSIS
+-------------------------------------------------- */
+
+.route-analysis {
+    margin-bottom: 24px;
+}
+
+
+.route-analysis h3 {
+    font-size: 16px;
+
+    margin-bottom: 14px;
+}
+
+
+.route-analysis-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+
+.route-analysis-card {
+    background: #f8fafc;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 10px;
+
+    padding: 16px;
+}
+
+
+.route-analysis-card p {
+    color: #6b7280;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+    margin-bottom: 8px;
+}
+
+
+.route-analysis-card strong {
+    font-size: 17px;
+}
+
+
+.traceroute-table tr.slowest-hop {
+    background: #fffbeb;
+}
+
+
+.traceroute-table tr.slowest-hop:hover {
+    background: #fef3c7;
+}
+
+
+/* --------------------------------------------------
+   PERFORMANCE SUMMARY
+-------------------------------------------------- */
+
+.summary-panel {
+    background: white;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 14px;
+
+    padding: 28px;
+
+    margin-bottom: 25px;
+}
+
+
+.summary-panel .section-heading {
+    margin-bottom: 20px;
+}
+
+
+.summary-panel .section-heading h2 {
+    font-size: 21px;
+}
+
+
+.summary-panel .section-heading p {
+    color: #6b7280;
+
+    margin-top: 5px;
+}
+
+
+.summary-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+
+.summary-card {
+    background: #f8fafc;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 12px;
+
+    padding: 20px;
+}
+
+
+.summary-card h3 {
+    margin-top: 10px;
+
+    font-size: 23px;
+}
+
+
+/* --------------------------------------------------
+   CHARTS
+-------------------------------------------------- */
+
+.chart-panel {
+    background: white;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 14px;
+
+    padding: 28px;
+
+    margin-bottom: 25px;
+}
+
+
+.chart-panel .section-heading {
+    margin-bottom: 10px;
+}
+
+
+.chart-panel .section-heading h2 {
+    font-size: 21px;
+}
+
+
+.chart-panel .section-heading p {
+    color: #6b7280;
+
+    margin-top: 5px;
+}
+
+
+.chart-container {
+    position: relative;
+
+    width: 100%;
+
+    height: 320px;
+
+    margin-top: 20px;
+}
+
+
+/* --------------------------------------------------
+   PERFORMANCE HEATMAP
+-------------------------------------------------- */
+
+.heatmap-panel {
+    background: white;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 14px;
+
+    padding: 28px;
+
+    margin-bottom: 25px;
+}
+
+
+.heatmap-panel .section-heading {
+    margin-bottom: 20px;
+}
+
+
+.heatmap-panel .section-heading h2 {
+    font-size: 21px;
+}
+
+
+.heatmap-panel .section-heading p {
+    color: #6b7280;
+
+    margin-top: 5px;
+}
+
+
+.heatmap-container {
+    overflow-x: auto;
+}
+
+
+.heatmap-table {
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 8px;
+}
+
+
+.heatmap-table th {
+    border: none;
+
+    text-align: center;
+
+    padding: 10px;
+}
+
+
+.heatmap-table th:first-child {
+    text-align: left;
+}
+
+
+.heatmap-table td {
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 16px;
+
+    text-align: center;
+
+    min-width: 110px;
+}
+
+
+.heatmap-table td:first-child {
+    text-align: left;
+
+    font-weight: 600;
+
+    background: transparent;
+}
+
+
+.heatmap-cell {
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.heatmap-cell:hover {
+    transform: scale(1.03);
+}
+
+
+.heatmap-empty {
+    background: #f3f4f6;
+
+    color: #9ca3af;
+}
+
+
+.heatmap-note {
+    color: #6b7280;
+
+    font-size: 13px;
+
+    margin-top: 16px;
+}
+
+
+/* --------------------------------------------------
+   RECENT DIAGNOSTICS
+-------------------------------------------------- */
+
+.history-panel {
+    background: white;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 14px;
+
+    padding: 28px;
+}
+
+
+.section-heading h2 {
+    font-size: 21px;
+}
+
+
+.section-heading p {
+    color: #6b7280;
+
+    margin-top: 5px;
+
+    margin-bottom: 22px;
+}
+
+
+.table-container {
+    overflow-x: auto;
+}
+
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+
+th,
+td {
+    text-align: left;
+
+    padding: 14px;
+
+    border-bottom: 1px solid #e8edf3;
+}
+
+
+th {
+    color: #6b7280;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+td {
+    font-size: 14px;
+}
+
+
+.history-panel tbody tr,
+.traceroute-panel tbody tr {
+    transition: background 0.15s ease;
+}
+
+
+.history-panel tbody tr:hover,
+.traceroute-panel tbody tr:hover {
+    background: #f8fafc;
+}
+
+
+/* --------------------------------------------------
+   DIAGNOSTIC TABLE BADGES
+-------------------------------------------------- */
+
+.status-badge,
+.http-badge {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.status-badge.healthy {
+    background: #ecfdf5;
+
+    color: #047857;
+}
+
+
+.status-badge.degraded {
+    background: #fffbeb;
+
+    color: #b45309;
+}
+
+
+.status-badge.unknown {
+    background: #f3f4f6;
+
+    color: #6b7280;
+}
+
+
+.http-badge.http-success {
+    background: #ecfdf5;
+
+    color: #047857;
+}
+
+
+.http-badge.http-warning {
+    background: #fffbeb;
+
+    color: #b45309;
+}
+
+
+.http-badge.http-error {
+    background: #fef2f2;
+
+    color: #b91c1c;
+}
+
+
+.http-badge.http-none {
+    background: #f3f4f6;
+
+    color: #6b7280;
+}
+
+
+/* --------------------------------------------------
+   RESPONSIVE
+-------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .summary-cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .route-analysis-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .search-area {
+        flex-wrap: wrap;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard {
+        width: 92%;
+    }
+
+
+    .cards {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .summary-cards {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .route-analysis-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .search-area {
+        flex-direction: column;
+    }
+
+
+    .search-area input,
+    .search-area button {
+        width: 100%;
+    }
+
+
+    .topbar {
+        padding: 20px 5%;
+    }
+
+
+    .chart-container {
+        height: 280px;
+    }
+
+
+    .traceroute-heading {
+        flex-direction: column;
+    }
+
+
+    .history-panel,
+    .traceroute-panel,
+    .chart-panel,
+    .heatmap-panel,
+    .summary-panel,
+    .diagnostic-panel {
+        padding: 20px;
+    }
+}

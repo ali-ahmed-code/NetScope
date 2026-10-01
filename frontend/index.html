@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NetScope</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <div>
+            <h1>NetScope</h1>
+
+            <p>
+                Network Health & Diagnostics
+            </p>
+        </div>
+
+
+        <div
+            class="api-status checking"
+            id="apiStatus"
+        >
+            <span
+                class="status-dot"
+                id="apiStatusDot"
+            ></span>
+
+            <span id="apiStatusText">
+                Checking API...
+            </span>
+        </div>
+
+    </header>
+
+
+    <main class="dashboard">
+
+        <!-- NETWORK DIAGNOSTIC -->
+
+        <section class="diagnostic-panel">
+
+            <h2>
+                Network Diagnostic
+            </h2>
+
+            <p class="section-description">
+                Enter a hostname to analyze connectivity,
+                latency, TCP availability, HTTPS health,
+                and network routing.
+            </p>
+
+
+            <div class="search-area">
+
+                <input
+                    type="text"
+                    id="hostInput"
+                    placeholder="github.com"
+                    value="github.com"
+                    aria-label="Hostname"
+                >
+
+                <button id="diagnoseButton">
+                    Run Diagnostic
+                </button>
+
+                <button
+                    id="tracerouteButton"
+                    class="secondary-button"
+                >
+                    Run Traceroute
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- CURRENT DIAGNOSTIC METRICS -->
+
+        <section class="cards">
+
+            <div class="metric-card">
+
+                <p class="metric-label">
+                    DNS Lookup
+                </p>
+
+                <h3 id="dnsValue">
+                    --
+                </h3>
+
+                <p id="dnsIp">
+                    Waiting for diagnostic
+                </p>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <p class="metric-label">
+                    Ping
+                </p>
+
+                <h3 id="pingValue">
+                    --
+                </h3>
+
+                <p id="packetLoss">
+                    Packet loss: --
+                </p>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <p class="metric-label">
+                    TCP 443
+                </p>
+
+                <h3 id="tcpValue">
+                    --
+                </h3>
+
+                <p id="tcpTime">
+                    Connection time: --
+                </p>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <p class="metric-label">
+                    HTTPS
+                </p>
+
+                <h3 id="httpValue">
+                    --
+                </h3>
+
+                <p id="httpTime">
+                    Response time: --
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- OVERALL STATUS -->
+
+        <section
+            class="status-panel status-neutral"
+            id="overallStatusPanel"
+        >
+
+            <div>
+
+                <p class="metric-label">
+                    Overall Network Status
+                </p>
+
+                <h2 id="overallStatus">
+                    No diagnostic performed
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <!-- TRACEROUTE PATH -->
+
+        <section class="traceroute-panel">
+
+            <div class="section-heading traceroute-heading">
+
+                <div>
+
+                    <h2>
+                        Traceroute Path
+                    </h2>
+
+                    <p id="tracerouteDescription">
+                        Run traceroute to view the hop-by-hop
+                        network path to the selected host.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="traceroute-summary"
+                    id="tracerouteSummary"
+                >
+                    Not run
+                </div>
+
+            </div>
+
+
+            <!-- ROUTE ANALYSIS -->
+
+            <div class="route-analysis">
+
+                <h3>
+                    Route Analysis
+                </h3>
+
+
+                <div class="route-analysis-grid">
+
+                    <div class="route-analysis-card">
+
+                        <p>
+                            Total Hops
+                        </p>
+
+                        <strong id="routeTotalHops">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="route-analysis-card">
+
+                        <p>
+                            Responding Hops
+                        </p>
+
+                        <strong id="routeRespondingHops">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="route-analysis-card">
+
+                        <p>
+                            Timed-Out Hops
+                        </p>
+
+                        <strong id="routeTimeoutHops">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="route-analysis-card">
+
+                        <p>
+                            Final Hop Latency
+                        </p>
+
+                        <strong id="routeFinalLatency">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="route-analysis-card">
+
+                        <p>
+                            Slowest Hop
+                        </p>
+
+                        <strong id="routeSlowestHop">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="route-analysis-card">
+
+                        <p>
+                            Largest Latency Increase
+                        </p>
+
+                        <strong id="routeLargestJump">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table class="traceroute-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Hop</th>
+                            <th>Address</th>
+                            <th>Probe 1</th>
+                            <th>Probe 2</th>
+                            <th>Probe 3</th>
+                            <th>Average</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tracerouteBody">
+
+                        <tr>
+                            <td colspan="7">
+                                No traceroute performed yet.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- PERFORMANCE SUMMARY -->
+
+        <section class="summary-panel">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Performance Summary
+                    </h2>
+
+                    <p id="summaryDescription">
+                        Historical performance statistics
+                        for the selected host.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-cards">
+
+                <div class="summary-card">
+
+                    <p class="metric-label">
+                        Average Latency
+                    </p>
+
+                    <h3 id="averageLatency">
+                        --
+                    </h3>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <p class="metric-label">
+                        Best Latency
+                    </p>
+
+                    <h3 id="minimumLatency">
+                        --
+                    </h3>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <p class="metric-label">
+                        Highest Latency
+                    </p>
+
+                    <h3 id="maximumLatency">
+                        --
+                    </h3>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <p class="metric-label">
+                        Average HTTPS Response
+                    </p>
+
+                    <h3 id="averageHttpResponse">
+                        --
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LATENCY CHART -->
+
+        <section class="chart-panel">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Latency History
+                    </h2>
+
+                    <p id="chartDescription">
+                        Historical ping latency for the selected host.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="chart-container">
+
+                <canvas id="latencyChart"></canvas>
+
+            </div>
+
+        </section>
+
+
+        <!-- HTTPS RESPONSE CHART -->
+
+        <section class="chart-panel">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        HTTPS Response Time History
+                    </h2>
+
+                    <p id="httpChartDescription">
+                        Historical HTTPS response time
+                        for the selected host.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="chart-container">
+
+                <canvas id="httpResponseChart"></canvas>
+
+            </div>
+
+        </section>
+
+
+        <!-- PERFORMANCE HEATMAP -->
+
+        <section class="heatmap-panel">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Latency Performance Heatmap
+                    </h2>
+
+                    <p id="heatmapDescription">
+                        Average latency by day and time period
+                        for the selected host.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="heatmap-container">
+
+                <table class="heatmap-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Day</th>
+                            <th>Night</th>
+                            <th>Morning</th>
+                            <th>Afternoon</th>
+                            <th>Evening</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="heatmapBody">
+
+                        <tr>
+                            <td colspan="5">
+                                Loading latency heatmap...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <p class="heatmap-note">
+                Time periods use your computer's local time.
+                Darker cells represent higher latency relative
+                to other measurements for the selected host.
+            </p>
+
+        </section>
+
+
+        <!-- RECENT DIAGNOSTICS -->
+
+        <section class="history-panel">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Recent Diagnostics
+                    </h2>
+
+                    <p>
+                        Historical network measurements stored by NetScope.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Time</th>
+                            <th>Target</th>
+                            <th>Status</th>
+                            <th>Latency</th>
+                            <th>Packet Loss</th>
+                            <th>HTTP</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="historyTable">
+
+                        <tr>
+                            <td colspan="6">
+                                Loading diagnostic history...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- CHART.JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <!-- NETSCOPE FRONTEND LOGIC -->
+
+    <script src="/static/app.js"></script>
+
+</body>
+
+</html>
