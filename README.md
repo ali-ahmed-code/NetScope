@@ -54,6 +54,18 @@ The dashboard displays current measurements alongside historical performance dat
 
 ![NetScope traceroute analysis](screenshots/traceroute-analysis.png)
 
+### Performance Charts
+
+![NetScope performance charts](screenshots/performance-charts.png)
+
+### Historical Analytics
+
+![NetScope latency heatmap and HTTPS history](screenshots/analytics-heatmap.png)
+
+### Recent Diagnostics
+
+![NetScope recent diagnostics](screenshots/recent-diagnostics.png)
+
 ## Technology Stack
 
 ### Backend
